@@ -1,0 +1,3 @@
+com\tt\controllers\HomeController.class
+com\tt\configs\WebApplicationContextConfig.class
+com\tt\configs\DispatcherServletInitializer.class
