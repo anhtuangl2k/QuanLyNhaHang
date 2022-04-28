@@ -1,13 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.tt.configs;
 
+
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,37 +15,83 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
- * @author anhtu
+ * @author hp
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.tt.controllers"})
+@EnableTransactionManagement
+@ComponentScan(basePackages = {
+    "com.findingcareer.controller",
+    "com.findingcareer.repository",
+    "com.findingcareer.service"})
 public class WebApplicationContextConfig implements WebMvcConfigurer{
-    
-    // Xử lí yêu cầu phục vụ tài nguyên tĩnh bằng cách ánh xạ tới Servlet
+
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer config) {
-        config.enable();
+    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
     }
-    
-    //Đường dẫn đến thư mục chứa css, js, image 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/css/**")
-                .addResourceLocations("/resources/css/");
-        registry.addResourceHandler("/images/**")
-                .addResourceLocations("/resources/images/");
-    }
-    
-    // Spring Boot sẽ sử dụng những property trên để map tên view với các tập tin view nằm trong thư mục /WEB-INF/Viewa
+     
     @Bean
-    public InternalResourceViewResolver getInternalResourceViewResolver(){
+    public InternalResourceViewResolver internalResourceViewResolver (){
+        
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        
         resolver.setViewClass(JstlView.class);
-        resolver.setPrefix("/WEB-INF/Views/");
-        resolver.setSuffix(".jsp");      
+        resolver.setPrefix("/WEB-INF/jsp/");
+        resolver.setSuffix(".jsp");
+        
         return resolver;
-    }     
+    }
+
+    // get data from resources
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+           registry.addResourceHandler("/css/**")
+                   .addResourceLocations("/resources/css/");
+           
+           registry.addResourceHandler("/js/**")
+                   .addResourceLocations("/resources/js/");
+           
+           // All folder inside Image folder
+           registry.addResourceHandler("/img/**")
+                   .addResourceLocations("/resources/img/");
+           registry.addResourceHandler("/slide/**")
+                   .addResourceLocations("/resources/img/slide/");
+           registry.addResourceHandler("/team/**")
+                   .addResourceLocations("/resources/img/team/");
+           
+            // All folder inside Vendor folder
+           registry.addResourceHandler("/vendor/**")
+                   .addResourceLocations("/resources/vendor/");
+    }
+    
+    
+    // get data from propertiesfile
+    @Bean
+    public MessageSource messageSource(){
+        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
+        
+        source.setBasenames("message","contentVNVer");
+        
+        return source;
+    }
+    
+    // Create send data file method
+    @Bean 
+    public CommonsMultipartResolver multipartResolver(){
+        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+        
+        resolver.setDefaultEncoding("UTF-8");
+        
+        return resolver;
+    }
+    
 }

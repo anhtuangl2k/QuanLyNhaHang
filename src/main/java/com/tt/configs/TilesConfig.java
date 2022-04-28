@@ -13,27 +13,27 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 
 /**
  *
- * @author anhtu
+ * @author hp
  */
 @Configuration
 public class TilesConfig {
-    
-    // Chuyển hướng đến trang có đuôi jsp cần tìm
     @Bean
-    public UrlBasedViewResolver urlBasedViewResolver(){
-        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-        resolver.setViewClass(TilesView.class);
-        resolver.setOrder(-2);
+    public UrlBasedViewResolver viewResolver(){
+        UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
         
-        return resolver;
+        viewResolver.setViewClass(TilesView.class);
+        viewResolver.setOrder(-2);
+        
+        return viewResolver;
     }
     
-    // Lấy data Layout từ trang tiles.xml
     @Bean
     public TilesConfigurer tilesConfigurer(){
-        TilesConfigurer c = new TilesConfigurer();
-        c.setDefinitions("/WEB-INF/tiles.xml");
-        c.setCheckRefresh(true);
-        return c;
+        TilesConfigurer configurer = new TilesConfigurer();
+        
+        configurer.setDefinitions("/WEB-INF/tiles.xml");
+        configurer.setCheckRefresh(true);
+        
+        return configurer;
     }
 }
