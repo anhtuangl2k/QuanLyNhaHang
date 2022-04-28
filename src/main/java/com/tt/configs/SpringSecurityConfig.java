@@ -25,13 +25,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableWebSecurity
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.findingcareer.repository",
-    "com.findingcareer.service"
+    "com.tt.repository",
+    "com.tt.services"
 })
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
-    @Autowired
-    private UserDetailsService userDetailsService;
-  
+//    @Autowired
+//    private UserDetailsService userDetailsService;
+//  
     // Method help encoder passwork
     @Bean
     public BCryptPasswordEncoder passwordEncoder(){
@@ -40,8 +40,8 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).
-                passwordEncoder(passwordEncoder());
+//        auth.userDetailsService(userDetailsService).
+//                passwordEncoder(passwordEncoder());
     }
 
     @Override
@@ -55,16 +55,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
         //Dont accept access from unknow account
         http.exceptionHandling().accessDeniedPage("/login?accessDenied");
         // Access permissions 
-        http.authorizeRequests().antMatchers("/").permitAll()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers("/user/**")
-                .access("hasRole('ROLE_USER')")
-                .antMatchers("/employer/**")
-                .access("hasRole('ROLE_EMPLOYER')")
-                .antMatchers("/employee/**")
-                .access("hasRole('ROLE_EMPLOYEE')")
-                .antMatchers("/recruitment/**")
-                .access("hasAnyRole('ROLE_EMPLOYEE','ROLE_EMPLOYER','ROLE_ADMIN')");
+//        http.authorizeRequests().antMatchers("/").permitAll()
+//                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+//                .antMatchers("/user/**")
+//                .access("hasRole('ROLE_USER')")
+//                .antMatchers("/employer/**")
+//                .access("hasRole('ROLE_EMPLOYER')")
+//                .antMatchers("/employee/**")
+//                .access("hasRole('ROLE_EMPLOYEE')")
+//                .antMatchers("/recruitment/**")
+//                .access("hasAnyRole('ROLE_EMPLOYEE','ROLE_EMPLOYER','ROLE_ADMIN')");
         
         http.csrf().disable();
     }

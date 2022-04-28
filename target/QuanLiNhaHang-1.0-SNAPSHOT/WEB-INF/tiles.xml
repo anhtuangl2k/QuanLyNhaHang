@@ -8,11 +8,11 @@ and open the template in the editor.
  
 <tiles-definitions>
     <!-- Giao diện chính của trang web -->
-    <definition name="baseLayout" template="/WEB-INF/Layout/base.jsp">
+    <definition name="baseLayout" template="/WEB-INF/jsp/views/base.jsp">
         <put-attribute name="title" value="Trang chu" />
-        <put-attribute name="header" value="/WEB-INF/Layout/header" />
-        <put-attribute name="footer" value="/WEB-INF/Layout/footer" />
-        <put-attribute name="content" value="/WEB-INF/Layout/footer" />
+        <put-attribute name="header" value="/WEB-INF/jsp/header" />
+        <put-attribute name="footer" value="/WEB-INF/jsp/footer" />
+        <put-attribute name="content" value="/WEB-INF/jsp/footer" />
     </definition>
     
 </tiles-definitions>

@@ -29,9 +29,9 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
-    "com.findingcareer.controller",
-    "com.findingcareer.repository",
-    "com.findingcareer.service"})
+    "com.tt.controller",
+    "com.tt.repository",
+    "com.tt.services"})
 public class WebApplicationContextConfig implements WebMvcConfigurer{
 
     @Override

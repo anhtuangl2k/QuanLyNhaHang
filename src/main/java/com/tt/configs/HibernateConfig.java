@@ -33,7 +33,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean getSessionFactory(){
         LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
         
-        factory.setPackagesToScan("com.findingcareer.pojo");
+        factory.setPackagesToScan("com.tt.pojos");
         factory.setDataSource(dataSource());
         factory.setHibernateProperties(hibernateProperties());
         
@@ -68,15 +68,15 @@ public class HibernateConfig {
         return transactionManager;
     }
     //Using cloudinary to upload file 
-    @Bean
-    public Cloudinary cloudinary(){
-        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name","dd58hrv0h",
-                "api_key","388372944622867",
-                "api_secret","-lyQci3ZQYQcLOi168TI4V8kU7g",
-                "secure",true
-                ));
-        
-        return c;
-    }
+//    @Bean
+//    public Cloudinary cloudinary(){
+//        Cloudinary c = new Cloudinary(ObjectUtils.asMap(
+//                "cloud_name","dd58hrv0h",
+//                "api_key","388372944622867",
+//                "api_secret","-lyQci3ZQYQcLOi168TI4V8kU7g",
+//                "secure",true
+//                ));
+//        
+//        return c;
+//    }
 }
