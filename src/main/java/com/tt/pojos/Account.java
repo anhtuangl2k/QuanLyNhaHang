@@ -5,151 +5,145 @@
  */
 package com.tt.pojos;
 
-import java.util.Date;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author anhtu
  */
-public class Account {
-    
-    private UUID APK;
-    private String UserID;
-    private String Password;
-    private int TypeAccount;
-    private int DeleteFlag;
-    private Date CreateDate;
-    private String CreateUserID;
-    private Date LastModifyDate;
-    private String LastModifyUserID;
+@Entity
+@Table(name = "account")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
+    @NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id"),
+    @NamedQuery(name = "Account.findByUserID", query = "SELECT a FROM Account a WHERE a.userID = :userID"),
+    @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password"),
+    @NamedQuery(name = "Account.findByTypeAccount", query = "SELECT a FROM Account a WHERE a.typeAccount = :typeAccount"),
+    @NamedQuery(name = "Account.findByDeleteFlag", query = "SELECT a FROM Account a WHERE a.deleteFlag = :deleteFlag")})
+public class Account implements Serializable {
 
-    /**
-     * @return the APK
-     */
-    public UUID getAPK() {
-        return APK;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    @Size(max = 45)
+    @Column(name = "UserID")
+    private String userID;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "Password")
+    private String password;
+    @Column(name = "TypeAccount")
+    private Integer typeAccount;
+    @Column(name = "DeleteFlag")
+    private Short deleteFlag;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDAccount")
+    private Collection<Informationaccount> informationaccountCollection;
+
+    public Account() {
     }
 
-    /**
-     * @param APK the APK to set
-     */
-    public void setAPK(UUID APK) {
-        this.APK = APK;
+    public Account(Integer id) {
+        this.id = id;
     }
 
-    /**
-     * @return the UserID
-     */
+    public Account(Integer id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getUserID() {
-        return UserID;
+        return userID;
     }
 
-    /**
-     * @param UserID the UserID to set
-     */
-    public void setUserID(String UserID) {
-        this.UserID = UserID;
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
-    /**
-     * @return the Password
-     */
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    /**
-     * @param Password the Password to set
-     */
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    /**
-     * @return the TypeAccount
-     */
-    public int getTypeAccount() {
-        return TypeAccount;
+    public Integer getTypeAccount() {
+        return typeAccount;
     }
 
-    /**
-     * @param TypeAccount the TypeAccount to set
-     */
-    public void setTypeAccount(int TypeAccount) {
-        this.TypeAccount = TypeAccount;
+    public void setTypeAccount(Integer typeAccount) {
+        this.typeAccount = typeAccount;
     }
 
-    /**
-     * @return the DeleteFlag
-     */
-    public int getDeleteFlag() {
-        return DeleteFlag;
+    public Short getDeleteFlag() {
+        return deleteFlag;
     }
 
-    /**
-     * @param DeleteFlag the DeleteFlag to set
-     */
-    public void setDeleteFlag(int DeleteFlag) {
-        this.DeleteFlag = DeleteFlag;
+    public void setDeleteFlag(Short deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 
-    /**
-     * @return the CreateDate
-     */
-    public Date getCreateDate() {
-        return CreateDate;
+    @XmlTransient
+    public Collection<Informationaccount> getInformationaccountCollection() {
+        return informationaccountCollection;
     }
 
-    /**
-     * @param CreateDate the CreateDate to set
-     */
-    public void setCreateDate(Date CreateDate) {
-        this.CreateDate = CreateDate;
+    public void setInformationaccountCollection(Collection<Informationaccount> informationaccountCollection) {
+        this.informationaccountCollection = informationaccountCollection;
     }
 
-    /**
-     * @return the CreateUserID
-     */
-    public String getCreateUserID() {
-        return CreateUserID;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    /**
-     * @param CreateUserID the CreateUserID to set
-     */
-    public void setCreateUserID(String CreateUserID) {
-        this.CreateUserID = CreateUserID;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Account)) {
+            return false;
+        }
+        Account other = (Account) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    /**
-     * @return the LastModifyDate
-     */
-    public Date getLastModifyDate() {
-        return LastModifyDate;
+    @Override
+    public String toString() {
+        return "com.tt.pojos.Account[ id=" + id + " ]";
     }
-
-    /**
-     * @param LastModifyDate the LastModifyDate to set
-     */
-    public void setLastModifyDate(Date LastModifyDate) {
-        this.LastModifyDate = LastModifyDate;
-    }
-
-    /**
-     * @return the LastModifyUserID
-     */
-    public String getLastModifyUserID() {
-        return LastModifyUserID;
-    }
-
-    /**
-     * @param LastModifyUserID the LastModifyUserID to set
-     */
-    public void setLastModifyUserID(String LastModifyUserID) {
-        this.LastModifyUserID = LastModifyUserID;
-    }
-    
     
 }

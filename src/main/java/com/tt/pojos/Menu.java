@@ -5,180 +5,161 @@
  */
 package com.tt.pojos;
 
-import java.util.Date;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author anhtu
  */
-public class Menu {
-    
-    private UUID APK;
-    private String Dish;
-    private Double Price;
-    private String Unit;
-    private Boolean Status;
-    private Boolean DeleteFlag;
-    private int TypeMenu;
-    private Date CreateDate;
-    private String CreateUserID;
-    private Date LastModifyDate;
-    private String LastModifyUserID;
+@Entity
+@Table(name = "menu")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Menu.findAll", query = "SELECT m FROM Menu m"),
+    @NamedQuery(name = "Menu.findById", query = "SELECT m FROM Menu m WHERE m.id = :id"),
+    @NamedQuery(name = "Menu.findByDish", query = "SELECT m FROM Menu m WHERE m.dish = :dish"),
+    @NamedQuery(name = "Menu.findByPrice", query = "SELECT m FROM Menu m WHERE m.price = :price"),
+    @NamedQuery(name = "Menu.findByUnit", query = "SELECT m FROM Menu m WHERE m.unit = :unit"),
+    @NamedQuery(name = "Menu.findByStatus", query = "SELECT m FROM Menu m WHERE m.status = :status"),
+    @NamedQuery(name = "Menu.findByDeteleFlag", query = "SELECT m FROM Menu m WHERE m.deteleFlag = :deteleFlag"),
+    @NamedQuery(name = "Menu.findByType", query = "SELECT m FROM Menu m WHERE m.type = :type")})
+public class Menu implements Serializable {
 
-    /**
-     * @return the APK
-     */
-    public UUID getAPK() {
-        return APK;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    @Size(max = 100)
+    @Column(name = "Dish")
+    private String dish;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "Price")
+    private Double price;
+    @Size(max = 100)
+    @Column(name = "Unit")
+    private String unit;
+    @Size(max = 100)
+    @Column(name = "Status")
+    private String status;
+    @Column(name = "DeteleFlag")
+    private Short deteleFlag;
+    @Column(name = "Type")
+    private Integer type;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDMenu")
+    private Collection<ReceiptMenu> receiptMenuCollection;
+
+    public Menu() {
     }
 
-    /**
-     * @param APK the APK to set
-     */
-    public void setAPK(UUID APK) {
-        this.APK = APK;
+    public Menu(Integer id) {
+        this.id = id;
     }
 
-    /**
-     * @return the Dish
-     */
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public String getDish() {
-        return Dish;
+        return dish;
     }
 
-    /**
-     * @param Dish the Dish to set
-     */
-    public void setDish(String Dish) {
-        this.Dish = Dish;
+    public void setDish(String dish) {
+        this.dish = dish;
     }
 
-    /**
-     * @return the Price
-     */
     public Double getPrice() {
-        return Price;
+        return price;
     }
 
-    /**
-     * @param Price the Price to set
-     */
-    public void setPrice(Double Price) {
-        this.Price = Price;
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
-    /**
-     * @return the Unit
-     */
     public String getUnit() {
-        return Unit;
+        return unit;
     }
 
-    /**
-     * @param Unit the Unit to set
-     */
-    public void setUnit(String Unit) {
-        this.Unit = Unit;
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 
-    /**
-     * @return the Status
-     */
-    public Boolean getStatus() {
-        return Status;
+    public String getStatus() {
+        return status;
     }
 
-    /**
-     * @param Status the Status to set
-     */
-    public void setStatus(Boolean Status) {
-        this.Status = Status;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    /**
-     * @return the DeleteFlag
-     */
-    public Boolean getDeleteFlag() {
-        return DeleteFlag;
+    public Short getDeteleFlag() {
+        return deteleFlag;
     }
 
-    /**
-     * @param DeleteFlag the DeleteFlag to set
-     */
-    public void setDeleteFlag(Boolean DeleteFlag) {
-        this.DeleteFlag = DeleteFlag;
+    public void setDeteleFlag(Short deteleFlag) {
+        this.deteleFlag = deteleFlag;
     }
 
-    /**
-     * @return the TypeMenu
-     */
-    public int getTypeMenu() {
-        return TypeMenu;
+    public Integer getType() {
+        return type;
     }
 
-    /**
-     * @param TypeMenu the TypeMenu to set
-     */
-    public void setTypeMenu(int TypeMenu) {
-        this.TypeMenu = TypeMenu;
+    public void setType(Integer type) {
+        this.type = type;
     }
 
-    /**
-     * @return the CreateDate
-     */
-    public Date getCreateDate() {
-        return CreateDate;
+    @XmlTransient
+    public Collection<ReceiptMenu> getReceiptMenuCollection() {
+        return receiptMenuCollection;
     }
 
-    /**
-     * @param CreateDate the CreateDate to set
-     */
-    public void setCreateDate(Date CreateDate) {
-        this.CreateDate = CreateDate;
+    public void setReceiptMenuCollection(Collection<ReceiptMenu> receiptMenuCollection) {
+        this.receiptMenuCollection = receiptMenuCollection;
     }
 
-    /**
-     * @return the CreateUserID
-     */
-    public String getCreateUserID() {
-        return CreateUserID;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    /**
-     * @param CreateUserID the CreateUserID to set
-     */
-    public void setCreateUserID(String CreateUserID) {
-        this.CreateUserID = CreateUserID;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Menu)) {
+            return false;
+        }
+        Menu other = (Menu) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    /**
-     * @return the LastModifyDate
-     */
-    public Date getLastModifyDate() {
-        return LastModifyDate;
+    @Override
+    public String toString() {
+        return "com.tt.pojos.Menu[ id=" + id + " ]";
     }
-
-    /**
-     * @param LastModifyDate the LastModifyDate to set
-     */
-    public void setLastModifyDate(Date LastModifyDate) {
-        this.LastModifyDate = LastModifyDate;
-    }
-
-    /**
-     * @return the LastModifyUserID
-     */
-    public String getLastModifyUserID() {
-        return LastModifyUserID;
-    }
-
-    /**
-     * @param LastModifyUserID the LastModifyUserID to set
-     */
-    public void setLastModifyUserID(String LastModifyUserID) {
-        this.LastModifyUserID = LastModifyUserID;
-    }
-    
     
 }

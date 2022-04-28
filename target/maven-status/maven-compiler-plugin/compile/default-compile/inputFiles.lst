@@ -1,13 +1,13 @@
-D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\FeedBack.java
+D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Feedback.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\configs\DispatcherServletInitializer.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\configs\HibernateConfig.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\controllers\HomeController.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\configs\WebApplicationContextConfig.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Account.java
-D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Receipt_Menu.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\configs\TilesConfig.java
-D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\WeddingHall.java
-D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\InformationAccount.java
+D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Weddinghall.java
+D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\ReceiptMenu.java
+D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Informationaccount.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Menu.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Receipt.java
 D:\QLNH\QuanLiNhaHang\src\main\java\com\tt\pojos\Restaurant.java
