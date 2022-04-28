@@ -17,11 +17,11 @@ com\tt\pojos\Restaurant.class
 com\tt\services\AccountService.class
 com\tt\pojos\Receipt_.class
 com\tt\pojos\ReceiptMenu.class
+com\tt\repositories\AccountRepository.class
 com\tt\pojos\Restaurant_.class
 com\tt\pojos\Informationaccount_.class
 com\tt\pojos\Weddinghall.class
 com\tt\pojos\Weddinghall_.class
 com\tt\pojos\Account.class
-com\findingcareer\repository\AccountRepository.class
 com\tt\configs\TilesConfig.class
 com\tt\pojos\Informationaccount.class

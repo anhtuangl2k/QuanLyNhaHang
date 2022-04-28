@@ -4,15 +4,22 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
- 
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache
+Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd"> 
+
 <tiles-definitions>
-    <!-- Giao diện chính của trang web -->
-    <definition name="baseLayout" template="/WEB-INF/jsp/views/base.jsp">
-        <put-attribute name="title" value="Trang chu" />
-        <put-attribute name="header" value="/WEB-INF/jsp/header" />
-        <put-attribute name="footer" value="/WEB-INF/jsp/footer" />
-        <put-attribute name="content" value="/WEB-INF/jsp/footer" />
+    <!-- Giao diện chính của trang web -->   
+    <definition name="homeBaseLayout" template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value=""/>
+        <put-attribute name="header" value="/WEB-INF/layout/header.jsp"/>
+        <put-attribute name="content" value=""/>
+        <put-attribute name="footer" value="/WEB-INF/layout/footer.jsp"/>
     </definition>
     
+    <!-- Definition Home Layout -->
+    <definition name="home" extends="homeBaseLayout">
+        <put-attribute name="title" value="INDEX"/>
+        <put-attribute name="content" value="/WEB-INF/jsp/views/index.jsp"/>
+    </definition>
 </tiles-definitions>
