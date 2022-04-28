@@ -5,136 +5,115 @@
  */
 package com.tt.pojos;
 
-import java.util.Date;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author anhtu
  */
-public class Receipt {
-    
-    private UUID APK;
-    private UUID APKWeddingHall;
-    private UUID APKReceiptMenu;
-    private Double Total;
-    private Date CreateDate;
-    private String CreateUserID;
-    private Date LastModifyDate;
-    private String LastModifyUserID;
+@Entity
+@Table(name = "receipt")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Receipt.findAll", query = "SELECT r FROM Receipt r"),
+    @NamedQuery(name = "Receipt.findById", query = "SELECT r FROM Receipt r WHERE r.id = :id"),
+    @NamedQuery(name = "Receipt.findByTotal", query = "SELECT r FROM Receipt r WHERE r.total = :total")})
+public class Receipt implements Serializable {
 
-    /**
-     * @return the APK
-     */
-    public UUID getAPK() {
-        return APK;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ID")
+    private Integer id;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "Total")
+    private Double total;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "iDReceipt")
+    private Collection<ReceiptMenu> receiptMenuCollection;
+    @JoinColumn(name = "IDWeddingHall", referencedColumnName = "ID")
+    @ManyToOne(optional = false)
+    private Weddinghall iDWeddingHall;
+
+    public Receipt() {
     }
 
-    /**
-     * @param APK the APK to set
-     */
-    public void setAPK(UUID APK) {
-        this.APK = APK;
+    public Receipt(Integer id) {
+        this.id = id;
     }
 
-    /**
-     * @return the APKWeddingHall
-     */
-    public UUID getAPKWeddingHall() {
-        return APKWeddingHall;
+    public Integer getId() {
+        return id;
     }
 
-    /**
-     * @param APKWeddingHall the APKWeddingHall to set
-     */
-    public void setAPKWeddingHall(UUID APKWeddingHall) {
-        this.APKWeddingHall = APKWeddingHall;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    /**
-     * @return the APKReceiptMenu
-     */
-    public UUID getAPKReceiptMenu() {
-        return APKReceiptMenu;
-    }
-
-    /**
-     * @param APKReceiptMenu the APKReceiptMenu to set
-     */
-    public void setAPKReceiptMenu(UUID APKReceiptMenu) {
-        this.APKReceiptMenu = APKReceiptMenu;
-    }
-
-    /**
-     * @return the Total
-     */
     public Double getTotal() {
-        return Total;
+        return total;
     }
 
-    /**
-     * @param Total the Total to set
-     */
-    public void setTotal(Double Total) {
-        this.Total = Total;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
-    /**
-     * @return the CreateDate
-     */
-    public Date getCreateDate() {
-        return CreateDate;
+    @XmlTransient
+    public Collection<ReceiptMenu> getReceiptMenuCollection() {
+        return receiptMenuCollection;
     }
 
-    /**
-     * @param CreateDate the CreateDate to set
-     */
-    public void setCreateDate(Date CreateDate) {
-        this.CreateDate = CreateDate;
+    public void setReceiptMenuCollection(Collection<ReceiptMenu> receiptMenuCollection) {
+        this.receiptMenuCollection = receiptMenuCollection;
     }
 
-    /**
-     * @return the CreateUserID
-     */
-    public String getCreateUserID() {
-        return CreateUserID;
+    public Weddinghall getIDWeddingHall() {
+        return iDWeddingHall;
     }
 
-    /**
-     * @param CreateUserID the CreateUserID to set
-     */
-    public void setCreateUserID(String CreateUserID) {
-        this.CreateUserID = CreateUserID;
+    public void setIDWeddingHall(Weddinghall iDWeddingHall) {
+        this.iDWeddingHall = iDWeddingHall;
     }
 
-    /**
-     * @return the LastModifyDate
-     */
-    public Date getLastModifyDate() {
-        return LastModifyDate;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
 
-    /**
-     * @param LastModifyDate the LastModifyDate to set
-     */
-    public void setLastModifyDate(Date LastModifyDate) {
-        this.LastModifyDate = LastModifyDate;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Receipt)) {
+            return false;
+        }
+        Receipt other = (Receipt) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
 
-    /**
-     * @return the LastModifyUserID
-     */
-    public String getLastModifyUserID() {
-        return LastModifyUserID;
-    }
-
-    /**
-     * @param LastModifyUserID the LastModifyUserID to set
-     */
-    public void setLastModifyUserID(String LastModifyUserID) {
-        this.LastModifyUserID = LastModifyUserID;
+    @Override
+    public String toString() {
+        return "com.tt.pojos.Receipt[ id=" + id + " ]";
     }
     
-    
-
 }
